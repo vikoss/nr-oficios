@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/test', [PDFController::class, 'index']);
+Route::get('/notified', [PDFController::class, 'notified']);
