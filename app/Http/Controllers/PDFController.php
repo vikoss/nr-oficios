@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NotifiedDepartments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use setasign\Fpdi\Fpdi;
 
 class PDFController extends Controller
@@ -26,5 +28,12 @@ class PDFController extends Controller
 
 
         return $pdf->Output();
+    }
+
+    public function notified(Request $request)
+    {
+        Mail::to('juan@gmail.com')->send(new NotifiedDepartments(['greet' => 'World!']));
+
+        return 'gg';
     }
 }
