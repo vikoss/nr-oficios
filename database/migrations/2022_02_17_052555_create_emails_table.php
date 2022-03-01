@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('notification_id')->constrained('notifications');
             $table->timestamp('verified_at')->nullable();
-            // Podria ser el id del user
+            $table->timestamp('sent_at')->nullable();
             $table->string('to');
             $table->timestamps();
         });
