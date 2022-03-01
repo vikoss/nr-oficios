@@ -6,9 +6,18 @@ use App\Mail\NotifiedDepartments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use setasign\Fpdi\Fpdi;
+use PDF;
 
 class PDFController extends Controller
 {
+
+    public function generate()
+    {
+        $pdf = PDF::loadView('pdf.sign');
+
+        return $pdf->stream('file.pdf');
+    }
+
     public function index(Request $request)
     {   //return $request->file('sign')->path();
         // initiate FPDI
@@ -35,5 +44,10 @@ class PDFController extends Controller
         Mail::to('juan@gmail.com')->send(new NotifiedDepartments(['greet' => 'World!']));
 
         return 'gg';
+    }
+
+    public function sign()
+    {
+        return 'httt';
     }
 }
