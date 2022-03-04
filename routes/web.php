@@ -15,7 +15,7 @@ use App\Http\Controllers\PDFController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/probar-pdf', [PDFController::class, 'generate']);
