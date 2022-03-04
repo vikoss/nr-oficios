@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use setasign\Fpdi\Fpdi;
 use PDF;
+use Illuminate\Support\Facades\Storage;
 
 class PDFController extends Controller
 {
@@ -46,8 +47,24 @@ class PDFController extends Controller
         return 'gg';
     }
 
-    public function sign()
+    public function sign(Request $request)
     {
-        return 'httt';
+        $pdfSign = PDF::loadView('pdf.sign');
+        Storage::put('public/pdf/invoice.pdf', $pdfSign->output());
+        $files = [$request->file('pdf')->path(), Storage::path('public/pdf/invoice.pdf')];
+
+        $fpdi = new FPDI;
+        foreach ($files as $file) {
+            $filename  = $file;
+            $count = $fpdi->setSourceFile($filename);
+            for ($i=1; $i<=$count; $i++) {
+                $template   = $fpdi->importPage($i);
+                $size       = $fpdi->getTemplateSize($template);
+                $fpdi->AddPage($size['orientation'], array($size['width'], $size['height']));
+                $fpdi->useTemplate($template);
+            }
+
+        }
+        return $fpdi->Output();
     }
 }
