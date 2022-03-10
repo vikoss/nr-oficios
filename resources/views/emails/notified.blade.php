@@ -7,7 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello</h1>
-    <h2>{{ $data['greet'] }}</h2>
+    
+    <h1>Hola tienes una nueva notificacion puedes revisarla entrando al siguiente enlace:</h1>
+    <h2>{{ asset('storage'.$notification['document']) }}</h2>
+    <h1>Recuerda validar de recibido entrando al siguiente enlace:</h1>
+    <h2>{{ asset('validacion/'.$email['id']) }}</h2>
+    <h2>{{ $email['id'] }}</h2>
 </body>
 </html>
