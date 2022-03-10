@@ -9,6 +9,8 @@ class Notification extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['document'];
+
     public function emails()
     {
         return $this->hasMany(Email::class);
