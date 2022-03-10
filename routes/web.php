@@ -14,7 +14,7 @@ use App\Http\Controllers\PDFController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{any}', function () {
     return view('index');
 });
 
