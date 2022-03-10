@@ -10,14 +10,19 @@ use App\Models\Email;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Jobs\NotifyDepartamentsByEmail;
+use Illuminate\Support\Facades\Storage;
 
 class NotificationController extends Controller
 {
-    public function store(NotificationRequest $notification)
+    /* public function store(NotificationRequest $notification)
     {
         // Primero subir al S3 el doc
+        //
+        $path = 'public/pdf/final.pdf';
+        Storage::put($path, base64_decode($notification->document));
+        $notification->document = $path;
         return Notification::create($notification->validated());
-    }
+    } */
 
     public function notify(Notification $notification, Request $request)
     {
