@@ -37,7 +37,7 @@ class NotifyDepartamentsByEmail implements ShouldQueue
     public function handle()
     {
         $this->notification->emails()->whereNull('sent_at')->get()->each(function ($email, $key) {
-            Mail::to($email->to)->send(new NotifiedDepartments($this->notification));
+            Mail::to($email->to)->send(new NotifiedDepartments($this->notification, $email));
             $email->sent_at = Carbon::now();
             $email->save();
         });
