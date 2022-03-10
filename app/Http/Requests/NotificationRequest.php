@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Storage;
 
 class NotificationRequest extends FormRequest
 {
@@ -24,8 +25,22 @@ class NotificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'document'  => 'required',
-            'user_id'   => 'required',
+            'document'  => 'required'
         ];
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $path = '/pdf/final.pdf';
+        Storage::put('public'.$path, base64_decode($this->document), 'public');
+
+        $this->merge([
+            'document' => $path
+        ]);
     }
 }
