@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use setasign\Fpdi\Fpdi;
 use PDF;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 class PDFController extends Controller
 {
@@ -65,6 +66,16 @@ class PDFController extends Controller
             }
 
         }
-        return $fpdi->Output();
+        // store
+        return base64_encode($fpdi->Output('S'));
     }
+
+    // Output()
+    /*
+        I: send the file inline to the browser. The plug-in is used if available. The name given by name is used when one selects the "Save as" option on the link generating the PDF.
+        D: send to the browser and force a file download with the name given by name.
+        F: save to a local file with the name given by name (may include a path).
+        S: return the document as a string. name is ignored.
+
+    */
 }
