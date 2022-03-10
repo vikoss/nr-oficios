@@ -11,16 +11,18 @@ class NotifiedDepartments extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $data;
+    public $notification;
+    public $email;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($notification, $email)
     {
-        $this->data = $data;
+        $this->notification = $notification;
+        $this->email = $email;
     }
 
     /**
