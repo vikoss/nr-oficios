@@ -6,6 +6,16 @@ const routes = [
     name: 'Home',
     component: () => import ('./../views/Home.vue'),
   },
+  {
+    path: '/notificaciones',
+    name: 'Notifications',
+    component: () => import ('./../views/Notifications.vue'),
+  },
+  {
+    path: '/notificar',
+    name: 'Notify',
+    component: () => import ('./../views/Notify.vue'),
+  },
 ];
 
 const router = createRouter({
