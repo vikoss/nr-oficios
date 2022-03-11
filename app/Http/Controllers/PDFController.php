@@ -78,4 +78,10 @@ class PDFController extends Controller
         S: return the document as a string. name is ignored.
 
     */
+
+    public function upload(Request $request)
+    {
+        $path = Storage::put('notifications', $request->file('file'));
+        return Storage::url($path);
+    }
 }

@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/test', [PDFController::class, 'index']);
 Route::get('/notified', [PDFController::class, 'notified']);
+Route::post('/upload', [PDFController::class, 'upload']);
 
 Route::post('/sign', [PDFController::class, 'sign']);
 Route::post('/users/{user}/notifications', [UserNotificationController::class, 'store']);
