@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UserNotificationController extends Controller
 {
+    public function index(User $user)
+    {
+        return $user->notifications()->paginate();
+    }
+
     public function store(User $user, NotificationRequest $notification)
     {
         // Primero subir al S3 el doc
