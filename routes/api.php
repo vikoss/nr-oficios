@@ -6,6 +6,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationEmailController;
 use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\EmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,10 @@ Route::get('/notified', [PDFController::class, 'notified']);
 
 Route::post('/sign', [PDFController::class, 'sign']);
 Route::post('/users/{user}/notifications', [UserNotificationController::class, 'store']);
+Route::get('/users/{user}/notifications', [UserNotificationController::class, 'index']);
 Route::post('/notifications/{notification}/notify', [NotificationController::class, 'notify']);
+Route::get('/notifications/{notification}', [NotificationController::class, 'show']);
 Route::post('/notifications/{notification}/emails', [NotificationEmailController::class, 'store']);
+Route::get('/notifications/{notification}/emails', [NotificationEmailController::class, 'index']);
 Route::put('/emails/{email}', [EmailController::class, 'update']);
 Route::get('/emails/{email}', [EmailController::class, 'show']);
