@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class NotificationEmailController extends Controller
 {
+    public function index(Notification $notification)
+    {
+        return $notification->emails()->paginate();
+    }
+
     public function store(Notification $notification, Request $request)
     {
         // Add validation of request
