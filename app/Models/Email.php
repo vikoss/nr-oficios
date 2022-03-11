@@ -14,5 +14,5 @@ class Email extends Model
      *
      * @var array
      */
-    protected $fillable = ['to'];
+    protected $fillable = ['to', 'verified_at'];
 }
