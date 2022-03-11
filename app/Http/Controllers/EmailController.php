@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 class EmailController extends Controller
 {
-    public function update(Request $request, Email $email)
+    public function show(Email $email)
     {
-        $email->update($request->all());
+        return $email;
+    }
+
+    public function update(Email $email, Request $request)
+    {
+        return $email->update($request->all());
     }
 }
