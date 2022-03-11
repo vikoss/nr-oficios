@@ -28,9 +28,9 @@
 
 <script>
 import { ref } from 'vue'
-import { storeNotification, notify } from '../api/notifications'
-import { signDocument } from './../api/documents'
-import { storeEmails } from './../api/emails'
+import { storeNotification, notify } from './../../api/notifications'
+import { signDocument } from './../../api/documents'
+import { storeEmails } from './../../api/emails'
 
 export default {
   setup() {
