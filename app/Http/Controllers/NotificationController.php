@@ -30,4 +30,9 @@ class NotificationController extends Controller
 
         return response()->json(['message' => 'Notification enqueue successfully'], 202);
     }
+
+    public function show(Notification $notification)
+    {
+        return $notification;
+    }
 }
