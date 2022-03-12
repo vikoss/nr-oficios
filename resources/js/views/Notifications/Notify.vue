@@ -7,7 +7,7 @@
 
     <embed
       v-show="documentSignedEncoded"
-      :src="`data:application/pdf;base64,${documentSignedEncoded}`"
+      :src="documentSignedEncoded"
       type="application/pdf"
       frameBorder="0"
       scrolling="auto"
