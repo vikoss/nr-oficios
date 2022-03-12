@@ -36,11 +36,10 @@ class NotificationRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $path = '/pdf/final.pdf';
-        Storage::put('public'.$path, base64_decode($this->document), 'public');
+        $path = Storage::put('notifications', base64_decode($this->document));
 
         $this->merge([
-            'document' => $path
+            'document' => Storage::url($path)
         ]);
     }
 }
