@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NotifiedDepartments;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use setasign\Fpdi\Fpdi;
 use PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
+use setasign\Fpdi\PdfParser\StreamReader;
 
 class PDFController extends Controller
 {
@@ -51,13 +53,22 @@ class PDFController extends Controller
     public function sign(Request $request)
     {
         $pdfSign = PDF::loadView('pdf.sign');
-        Storage::put('public/pdf/invoice.pdf', $pdfSign->output());
-        $files = [$request->file('pdf')->path(), Storage::path('public/pdf/invoice.pdf')];
+        $pathRandomTmp = 'tmp/final.pdf';
+        Storage::put($pathRandomTmp, $pdfSign->output());
+        //return 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.Storage::path($pathRandomTmp);
+        $urlFinal = 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.$pathRandomTmp;
+        /* return $urlFinal;
+        return Storage::download($urlFinal); */
+        $files = [$request->file('pdf')->path(), file_get_contents($urlFinal)];
 
         $fpdi = new FPDI;
-        foreach ($files as $file) {
+        foreach ($files as $key => $file) {
             $filename  = $file;
-            $count = $fpdi->setSourceFile($filename);
+            if ($key === 1) {
+                $count = $fpdi->setSourceFile(StreamReader::createByString($filename));
+            } else {
+                $count = $fpdi->setSourceFile($filename);
+            }
             for ($i=1; $i<=$count; $i++) {
                 $template   = $fpdi->importPage($i);
                 $size       = $fpdi->getTemplateSize($template);
@@ -67,7 +78,9 @@ class PDFController extends Controller
 
         }
         // store
-        return base64_encode($fpdi->Output('S'));
+        //return base64_encode($fpdi->Output('S'));
+        $pathF = Storage::put($pathRandomTmp, $fpdi->Output('S'));
+        return $urlFinal;
     }
 
     // Output()
