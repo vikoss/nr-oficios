@@ -2,8 +2,7 @@
   <h1>notifications</h1>
   <div v-if="notifications.items">
     <div v-for="notification in notifications.items" :key="notification.id">
-      <p>{{ notification.document }}</p>
-      <p>{{ notification.id }}</p>
+      <p>{{ notification.name }}</p>
       <input type="button" value="Detaller" @click="showNotification(notification.id)">
     </div>
   </div>

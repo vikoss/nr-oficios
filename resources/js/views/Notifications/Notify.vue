@@ -21,6 +21,10 @@
     <input type="text" name="email" v-model="email">
     <br>
     <br>
+    <p>Nombre de la notificacion:</p>
+    <input type="text" name="name" v-model="name">
+    <br>
+    <br>
     <br>
     <input type="button" value="Notificar" @click="store">
   </div>
@@ -37,6 +41,7 @@ export default {
     const notification = ref({})
     const emails = ref([])
     const email = ref('')
+    const name = ref('')
     const document = ref({})
     const documentSignedEncoded = ref(null)
     const sign = async () => {
@@ -44,7 +49,7 @@ export default {
       documentSignedEncoded.value = await signDocument(document.value)
     }
     const store = async () => {
-      const notification = await storeNotification(documentSignedEncoded.value)
+      const notification = await storeNotification({ name: name.value, document: documentSignedEncoded.value })
       console.log(email.value.split());
       const mapEmails = email.value.split().map(email => ({ to: email }))
       console.log(mapEmails);
@@ -63,6 +68,7 @@ export default {
       documentSignedEncoded,
       store,
       email,
+      name,
     }
   }
 

@@ -25,7 +25,8 @@ class NotificationRequest extends FormRequest
     public function rules()
     {
         return [
-            'document'  => 'required'
+            'document'  => 'required',
+            'name'      => 'required'
         ];
     }
 
@@ -34,12 +35,13 @@ class NotificationRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    /* protected function prepareForValidation()
     {
         $path = Storage::put('notifications', base64_decode($this->document));
 
         $this->merge([
-            'document' => Storage::url($path)
+            'document'  => Storage::url($path),
+            'name'      => strtolower($this->name)
         ]);
-    }
+    } */
 }

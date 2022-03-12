@@ -2,9 +2,10 @@ import { post, get } from 'axios';
 
 const userId = 1
 
-const storeNotification = (notification) => new Promise((resolve, reject) => {
+const storeNotification = ({ name, document }) => new Promise((resolve, reject) => {
   const body = new FormData()
-  body.append('document', notification)
+  body.append('document', document)
+  body.append('name', name)
   post(`http://localhost:9009/api/users/${userId}/notifications`, body, {
     headers: {
       Authorization: 'Bearer ${JWT()}',
