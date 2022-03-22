@@ -1,6 +1,10 @@
 <template>
   <div>
-    <input type="file" name="file" id="file" @change="handleFile">
+    <router-link :to="{ name: 'Home' }">Regresar</router-link>
+    <br>
+    <br>
+    <br>
+    <input accept=".pdf" type="file" name="file" id="file" @change="handleFile">
     <br>
     <br>
     <input type="button" value="Firmar" @click="sign">
@@ -35,9 +39,11 @@ import { ref } from 'vue'
 import { storeNotification, notify } from './../../api/notifications'
 import { signDocument } from './../../api/documents'
 import { storeEmails } from './../../api/emails'
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
+    const router = useRouter()
     const notification = ref({})
     const emails = ref([])
     const email = ref('')
@@ -56,6 +62,7 @@ export default {
       const emails = await storeEmails({ notificationId: notification.id, emails: mapEmails })
       const notified = await notify(notification.id)
       alert('Notificacion enviada.')
+      router.push({ name: 'Home' })
       console.log(notified)
     }
     const handleFile = (e) => {

@@ -1,9 +1,10 @@
 <template>
+  <router-link :to="{ name: 'Home' }">Regresar</router-link>
   <h1>notifications</h1>
   <div v-if="notifications.items">
     <div v-for="notification in notifications.items" :key="notification.id">
       <p>{{ notification.name }}</p>
-      <input type="button" value="Detaller" @click="showNotification(notification.id)">
+      <input type="button" value="Ver detalles" @click="showNotification(notification.id)">
     </div>
   </div>
   <h2 v-else>Niguna notification aun.</h2>

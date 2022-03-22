@@ -8,7 +8,7 @@
 
 <script>
 import { reactive } from 'vue'
-import { authenticate } from './../api/authenticate'
+import { authenticate, me } from './../api/authenticate'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -23,6 +23,7 @@ export default {
 
     const login = async () => {
       await authenticate(credentials)
+      await me()
       router.push({ name: 'Home' })
     }
 

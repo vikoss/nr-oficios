@@ -1,8 +1,19 @@
 <template>
+  <router-link :to="{ name: 'Notifications' }">Regresar</router-link>
   <h1>Detalles de notification</h1>
   <div v-if="notification.item">
     <h1>Notificacion:</h1>
-    <p>{{ notification.item.document }}</p>
+    <p>{{ notification.item.name }}</p>
+    <embed
+      v-show="notification.item.document"
+      :src="notification.item.document"
+      type="application/pdf"
+      frameBorder="0"
+      scrolling="auto"
+      height="500"
+      width="100%"
+      :alt="notification.item.name"
+    />
   </div>
   <div v-if="notification.emails">
     <h1>Emails notificados:</h1>
@@ -14,7 +25,7 @@
       </p>
       <p>
         Enviado el:
-        <strong>{{ email.sent_at }}</strong>
+        <strong>{{ email.sent_at ? email.sent_at : 'Aun no se envia.' }}</strong>
       </p>
       <p>
         Validado de recibido:
