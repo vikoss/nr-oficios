@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departament;
+use App\Models\Position;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -17,19 +20,31 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        foreach (Users::data() as $key => $user) {
-            DB::table('users')->insert([
-                'employee_number'   => $user[0],
-                'name'              => $user[1],
-                'first_surname'     => $user[2],
-                'second_surname'    => $user[3],
-                'dependency_desc'   => $user[4],
-                'dependency'        => $user[5],
-                'position'          => $user[6],
-                'email'             => $user[7],
-                'role'              => $user[8],
-                'password'          => Hash::make($user[0]),
-            ]);
+        foreach (Users::data() as $key => $data) {
+            # employe_number    name    first_surname   second_surname  direction   departaments    email   rol
+            #      1              2           3                4           5             6            7      8
+
+            $role_id = DB::table('roles')->select('id')->where('name', $data[8])->get();
+            $employee_id = DB::table('employees')->select('id')->where('employee_number', $data[0])->get();
+            $departament_id = DB::table('departaments')->select('id')->where('name', $data[6])->get();
+            $direction_id = DB::table('directions')->select('id')->where('name', $data[5])->get();
+            $position_id = DB::table('positions')->select('id')->where('name', $data[4])->get();
+
+            $user = new User;
+            $user->nick_name     = "{$data[1]} {$data[2]}";
+            $user->email         = $data[7];
+            $user->password      = Hash::make($data[0]);
+            $user->role_id       = $role_id[0]->id;
+            $user->employee_id   = $employee_id[0]->id;
+            $user->save();
+
+            $position = Position::find($position_id[0]->id);
+            $position->departament_id = $departament_id[0]->id;
+            $position->save();
+
+            $departament = Departament::find($departament_id[0]->id);
+            $departament->direction_id = $direction_id[0]->id;
+            $departament->save();
         }
     }
 }
