@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NotifiedDepartments;
+use App\Models\Employee;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -11,6 +12,8 @@ use PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 use setasign\Fpdi\PdfParser\StreamReader;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PDFController extends Controller
 {
@@ -52,8 +55,14 @@ class PDFController extends Controller
 
     public function sign(Request $request)
     {
-        $pdfSign = PDF::loadView('pdf.sign');
-        $pathRandomTmp = 'tmp/final.pdf';
+        //return auth()->user()->toArray();
+        $employee = Employee::find(auth()->user()->employee_id);
+        $pdfSign = PDF::loadView('pdf.sign', [
+            'employee'  => $employee,
+            'position'  => $employee->position,
+            'qrCode'    => base64_encode(QrCode::generate($employee->employee_number)),
+        ]);
+        $pathRandomTmp = 'notifications/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
         //return 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.Storage::path($pathRandomTmp);
         $urlFinal = 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.$pathRandomTmp;
