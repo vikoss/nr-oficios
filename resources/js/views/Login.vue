@@ -15,6 +15,7 @@ export default {
   name: 'Login',
   setup() {
     const router = useRouter()
+
     const credentials = reactive({
       email: '',
       password: '',
@@ -23,7 +24,6 @@ export default {
     const login = async () => {
       await authenticate(credentials)
       router.push({ name: 'Home' })
-
     }
 
     return { credentials, login };
