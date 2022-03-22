@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nick_name',
         'email',
         'password',
     ];
@@ -46,6 +46,15 @@ class User extends Authenticatable implements JWTSubject
     public function notifications()
     {
         return $this->hasMany(Notification::class);
+    }
+
+    /**
+     * Get the phone associated with the user.
+     */
+    public function employee()
+    {
+        //return $this->hasOne(Employee::class);
+        return $this->belongsTo(Employee::class);
     }
 
     /**
