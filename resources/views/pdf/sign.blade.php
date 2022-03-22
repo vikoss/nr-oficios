@@ -1,3 +1,9 @@
+<?php
+    $dateNow = Carbon\Carbon::now();
+    $monthName = $dateNow->monthName;
+    $day = $dateNow->day;
+    $year = $dateNow->year;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,22 +49,31 @@
     <title>Document</title>
 </head>
 <body>
-<header>
+    <header>
         <p>2022 "Año del Quincentenario de la Funcion de Toluca de Lerdo, Capital del Estado de Mexico"</p>
         <div>
             <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/logo.png';?>" alt="">
         </div>
     </header>
     <div class="fecha">
-        <p>Nicolas Romero, Estado de Mexico, a 01 de febrero de 2022.</p>
+        <p>
+            Nicolas Romero, Estado de Mexico, a
+            {{ "{$day} de {$monthName} de {$year}." }}
+        </p>
     </div>
     <section class="firma">
         <p class="nombre">ATENTAMENTE</p>
-        <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/QR.jpeg';?>" alt="">
-        <p class="nombre2">MTRO. GILBERTO HERNAN CONDE ZARATE</p>
-        <P class="nombre">OFICIAL MAYOR </P>
+        <img src="data:image/png;base64, {!! $qrCode !!}"" alt="dddd">
+        <p>
+        {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$position['name']} {$employee['employee_number']} {$dateNow}") }}
+        </p>
+        <p class="nombre2">
+            {{ "{$employee['name']} {$employee['first_surname']} {$employee['second_surname']}" }}
+        </p>
+        <p class="nombre">
+            {{ $position['name'] }}
+        </p>
     </section>
-    
     <footer>
         <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/NR.jpeg';?>" alt="">
     </footer>
