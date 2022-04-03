@@ -1,8 +1,21 @@
 <template>
   <div>
-    <input v-model="credentials.email" type="text" name="email" id="email">
-    <input v-model="credentials.password" type="password" name="password" id="password">
-    <input type="button" value="Entrar" @click="login">
+    <input-base
+      id="email"
+      v-model="credentials.email"
+      label="Correo:"
+    />
+    <input-base
+      id="password"
+      v-model="credentials.password"
+      type="password"
+      label="Contraseña:"
+    />
+    <button-base
+      label="Entrar"
+      :loading="false"
+      @click="login"
+    />
   </div>
 </template>
 
@@ -10,9 +23,13 @@
 import { reactive } from 'vue'
 import { authenticate, me } from './../api/authenticate'
 import { useRouter } from 'vue-router'
+import ButtonBase from './../components/ButtonBase.vue'
+import InputBase from './../components/InputBase.vue'
+
 
 export default {
   name: 'Login',
+  components: { InputBase, ButtonBase, },
   setup() {
     const router = useRouter()
 
