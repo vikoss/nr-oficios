@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="bg-orange text-white block h-11 w-full font-bold text-base rounded-md cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray"
+    class="bg-wine text-white block h-11 w-full font-bold text-base rounded-md cursor-pointer disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray"
   >
     <svg
       v-show="loading"

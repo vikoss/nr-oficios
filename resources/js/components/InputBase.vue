@@ -1,12 +1,12 @@
 <template>
   <label
     :for="id"
-    class="text-blue text-base font-medium block relative"
+    class="text-wine text-base font-medium block relative"
   >
     {{ label }}
     <input
       :id="id"
-      class="h-11 py-3 px-3.5 rounded-md border border-blue border-solid outline-none text-black text-base font-medium mt-1 w-full focus:border-2 focus:shadow"
+      class="h-11 py-3 px-3.5 rounded-md border border-wine border-solid outline-none text-gray text-base font-medium mt-1 w-full focus:border-2 focus:shadow"
       :class="{'uppercase': isUpperCase, [classInput]: true}"
       :type="type"
       :placeholder="placeholder"
