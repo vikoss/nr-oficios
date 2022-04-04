@@ -1,0 +1,20 @@
+<template>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+    </defs>
+    <path style="fill:none;" d="M0,0H24V24H0Z"/>
+    <path :style="`fill: ${hexColor};`" d="M19.35,10.04a7.492,7.492,0,0,0-14-2A6,6,0,0,0,6,20H19a4.986,4.986,0,0,0,.35-9.96ZM19,18H6a4,4,0,0,1-.44-7.97l1.07-.11.5-.95a5.487,5.487,0,0,1,10.26,1.46l.3,1.5,1.53.11A2.983,2.983,0,0,1,19,18ZM8,13h2.55v3h2.9V13H16L12,9Z"/>
+  </svg>
+</template>
+
+<script>
+export default {
+  name: 'CloudSVG',
+  props: {
+    hexColor: {
+      type: String,
+      default: '#ffff',
+    },
+  },
+}
+</script>
