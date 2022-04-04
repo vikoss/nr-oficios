@@ -1,46 +1,54 @@
 <template>
-  <router-link :to="{ name: 'Notifications' }">Regresar</router-link>
-  <h1>Detalles de notification</h1>
-  <div v-if="notification.item">
-    <h1>Notificacion:</h1>
-    <p>{{ notification.item.name }}</p>
-    <embed
-      v-show="notification.item.document"
-      :src="notification.item.document"
-      type="application/pdf"
-      frameBorder="0"
-      scrolling="auto"
-      height="500"
-      width="100%"
-      :alt="notification.item.name"
-    />
-  </div>
-  <div v-if="notification.emails">
-    <h1>Emails notificados:</h1>
-    <div v-for="email in notification.emails" :key="email.id">
-      <span style="border: 2px solid aqua; display: block;"></span>
-      <p>
-        Para:
-        <strong>{{ email.to }}</strong>
-      </p>
-      <p>
-        Enviado el:
-        <strong>{{ email.sent_at ? email.sent_at : 'Aun no se envia.' }}</strong>
-      </p>
-      <p>
-        Validado de recibido:
-        <strong>{{ email.verified_at ? 'Si' : 'No' }}</strong>
-      </p>
+  <header-base />
+  <main class="px-6 sm:px-16 py-12">
+    <redirect-to-back />
+    <div class="grid grid-cols-5 mt-5">
+      <div class="col-span-5 sm:col-span-2">
+        <h1>
+          Notificacion
+          <a :href="notification.item.document" class="uppercase hover:underline font-bold text-wine" target="_blank" rel="noopener noreferrer">
+            {{ notification.item.name }}
+          </a>
+        </h1>
+        <h2 class="mb-3">Consulta los correos de quienes fueron notificados.</h2>
+      </div>
+      <div class="col-span-5 sm:col-span-3">
+        <embed
+          v-show="notification.item.document"
+          :src="notification.item.document"
+          type="application/pdf"
+          frameBorder="0"
+          scrolling="auto"
+          height="350"
+          width="100%"
+          :alt="notification.item.name"
+        />
+      </div>
     </div>
-  </div>
+    <table-base
+      v-if="notification.emails"
+      :headers="[
+        { name: 'created_at', label: 'Fecha de registro' },
+        { name: 'sent_at', label: 'Fecha de envio' },
+        { name: 'to', label: 'Para' },
+        { name: 'verified_at', label: 'Validado de recibido' }
+      ]"
+      :data="notification.emails"
+    />
+    <h2 v-else>Niguna notification aun.</h2>
+  </main>
 </template>
 
 <script>
 import { reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getNotification, getEmailsNotification } from './../../api/notifications'
+import TableBase from '../../components/TableBase.vue'
+import HeaderBase from '../../components/HeaderBase.vue'
+import RedirectToBack from '../../components/RedirectToBack.vue'
 
 export default {
+  components: { TableBase, HeaderBase, RedirectToBack },
   setup() {
     const router = useRouter()
     const route = useRoute()

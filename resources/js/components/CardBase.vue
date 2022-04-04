@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 py-6 px-5 rounded-lg" style="box-shadow: 0px 0px 15px #00000029;">
+  <div class="grid grid-cols-3 py-6 px-5 rounded-lg h-full" style="box-shadow: 0px 0px 15px #00000029;">
     <div class="col-span-2 flex">
       <document-svg />
       <h5 class="ml-2">{{ label }}</h5>
