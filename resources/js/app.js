@@ -5,8 +5,8 @@ import './index.css'
 import { JWT } from './helpers/localStorage'
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !JWT()) next({ name: 'Login' });
-  else next();
+  if (to.name !== 'Login' && !JWT()) next({ name: 'Login' })
+  else next()
 });
 
 createApp(App)
