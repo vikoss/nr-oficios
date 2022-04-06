@@ -1,7 +1,7 @@
 <template>
   <header-base />
   <main class="px-6 sm:px-16 py-12">
-    <div class="grid gap-3 grid-cols-1 sm:grid-cols-3">
+    <div class="grid gap-3 grid-cols-1 sm:grid-cols-2">
       <div class="col-span-1">
         <card-base
           label="Notificar"
