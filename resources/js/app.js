@@ -5,7 +5,8 @@ import './index.css'
 import { JWT } from './helpers/localStorage'
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== 'Login' && !JWT()) next({ name: 'Login' })
+  if (to.name === 'EmailValidation') next()
+  else if (to.name !== 'Login' && !JWT()) next({ name: 'Login' })
   else next()
 });
 
