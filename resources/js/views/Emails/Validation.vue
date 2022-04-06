@@ -1,36 +1,31 @@
 <template>
-  <h1>Gracias por avisar de recibido.</h1>
+  <div class="min-h-screen flex items-center justify-center">
+    <loading-circle-svg class="w-1/3 h-auto text-wine self-center" />
+  </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { getEmail, updateEmail } from './../../api/emails'
+import { getNotification } from './../../api/notifications'
+import LoadingCircleSvg from '../../svg/LoadingCircle.vue'
 
 export default {
+  components: { loadingCircleSvg },
   setup() {
-    console.log('vaaa');
     const route = useRoute()
     const fetchEmail = async () => {
       const email = await getEmail(route.params.email)
-      if (email.verified_at) {
-        alert(`Ya habias notificado de recibido el: ${email.verified_at}`)
-      } else {
+      if (!email.verified_at) {
         const verified_at = new Date()
         email.verified_at = verified_at.toISOString().slice(0, 19).replace('T', ' ')
         await updateEmail(email)
-        alert('Listo ya se aviso que recibiste la notificacion.')
       }
-      console.log(email)
+      const notification = await getNotification(email.notification_id)
+      window.location.href = notification.document;
     }
     fetchEmail()
-
-    return { }
   },
 
 }
 </script>
-
-<style>
-
-</style>
