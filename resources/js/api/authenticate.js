@@ -1,8 +1,9 @@
-import { post, get } from 'axios';
-import { JWT } from '../helpers/localStorage';
+import { post, get } from 'axios'
+import { JWT } from '../helpers/localStorage'
+import { API } from './baseUrl'
 
 const authenticate = (credentials) => new Promise((resolve, reject) => {
-  post('http://127.0.0.1:9009/api/auth/login', credentials)
+  post(`${API}/api/auth/login`, credentials)
     .then(({ data }) => {
       localStorage.setItem('oficios-jwt', JSON.stringify(data));
       resolve(data);
@@ -11,7 +12,7 @@ const authenticate = (credentials) => new Promise((resolve, reject) => {
 });
 
 const me = () => new Promise((resolve, reject) => {
-  get('http://127.0.0.1:9009/api/auth/me', {
+  get(`${API}/api/auth/me`, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },
@@ -24,7 +25,7 @@ const me = () => new Promise((resolve, reject) => {
 });
 
 const logout = () => new Promise((resolve, reject) => {
-  post('http://127.0.0.1:9009/api/auth/logout', {}, {
+  post(`${API}/api/auth/logout`, {}, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },

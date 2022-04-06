@@ -1,11 +1,11 @@
-import { post, get } from 'axios';
-
-import { JWT, currentUser } from '../helpers/localStorage';
+import { post, get } from 'axios'
+import { JWT, currentUser } from '../helpers/localStorage'
+import { API } from './baseUrl'
 
 const signDocument = (document) => new Promise((resolve, reject) => {
   const body = new FormData()
   body.append('pdf', document)
-  post('http://localhost:9009/api/sign', body, {
+  post(`${API}/api/sign`, body, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },
@@ -17,7 +17,7 @@ const signDocument = (document) => new Promise((resolve, reject) => {
 });
 
 const me = () => new Promise((resolve, reject) => {
-  get('http://localhost:9009/api/auth/me', {
+  get(`${API}/api/auth/me`, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },
