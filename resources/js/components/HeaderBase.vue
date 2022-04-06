@@ -19,14 +19,15 @@
 </template>
 
 <script>
-import { inject } from 'vue'
 import ArrowBottomSvg from './../svg/ArrowBottom.vue'
+import { currentUser } from './../helpers/localStorage'
+import { reactive } from 'vue'
 
 export default {
   name: 'HeaderBase',
   components: { ArrowBottomSvg },
   setup() {
-    const user = inject('currentUser', {})
+    const user = reactive(currentUser())
 
     return { user }
   },

@@ -76,6 +76,7 @@
         />
       </section>
     </div>
+    <modal-notify-successfull v-show="app.showModal" />
   </main>
 </template>
 
@@ -90,16 +91,18 @@ import ButtonBase from './../../components/ButtonBase.vue'
 import InputBase from './../../components/InputBase.vue'
 import InputFile from './../../components/InputFile.vue'
 import RedirectToBack from '../../components/RedirectToBack.vue'
+import ModalNotifySuccessfull from '../../components/ModalNotifySuccessfull.vue'
 
 export default {
   name: 'NofityView',
-  components: { ButtonBase, InputBase, HeaderBase, RedirectToBack, InputFile },
+  components: { ButtonBase, InputBase, HeaderBase, RedirectToBack, InputFile, ModalNotifySuccessfull },
   setup() {
     const router = useRouter()
     const notification = ref({})
     const app = reactive({
       loading: false,
       disabled: true,
+      showModal: false,
     })
     const emails = ref([])
     const email = ref('')
@@ -113,15 +116,18 @@ export default {
       app.loading = false
     }
     const store = async () => {
+      app.loading = true
       const notification = await storeNotification({ name: name.value, document: documentSignedEncoded.value })
       console.log(email.value.split());
       const mapEmails = email.value.split().map(email => ({ to: email }))
       console.log(mapEmails);
       const emails = await storeEmails({ notificationId: notification.id, emails: mapEmails })
       const notified = await notify(notification.id)
-      alert('Notificacion enviada.')
-      router.push({ name: 'Home' })
-      console.log(notified)
+      app.loading = false
+      app.showModal = true
+      /* alert('Notificacion enviada.')
+      //router.push({ name: 'Home' })
+      console.log(notified) */
     }
     const handleFile = (e) => {
       document.value = e.target.files[0]

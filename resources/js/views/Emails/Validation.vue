@@ -8,10 +8,10 @@
 import { useRoute } from 'vue-router'
 import { getEmail, updateEmail } from './../../api/emails'
 import { getNotification } from './../../api/notifications'
-import LoadingCircleSvg from '../../svg/LoadingCircle.vue'
+import LoadingCircleSvg from './../../svg/LoadingCircle.vue'
 
 export default {
-  components: { loadingCircleSvg },
+  components: { LoadingCircleSvg },
   setup() {
     const route = useRoute()
     const fetchEmail = async () => {
