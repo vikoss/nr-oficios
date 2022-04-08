@@ -52,10 +52,24 @@
         />
       </section>
       <section v-show="!signing">
-        <input-base
-          id="email-to-notify"
-          v-model="email"
-          label="Correo a notificar:"
+        <check-box-base
+          id="notify-all"
+          label="Notificar a todos"
+          v-model="checkbox"
+        />
+        <p>Y adicionalmente a:</p>
+        <p>Recuerda agregar los correos separados por comas</p>
+        <label for="" class="text-wine text-base font-medium block">
+          Correos a notificar:
+        </label>
+        <textarea
+          class="py-3 px-3.5 rounded-md border border-wine border-solid outline-none text-gray text-base font-medium focus:border-2 focus:shadow w-full"
+          name="emails"
+          id="emails"
+          cols="30"
+          rows="5"
+          placeholder="juan@nicolasromero.gob.mx,pedro@nicolasromero.gob.mx"
+          v-model="emailsFromTextareaText"
         />
         <br>
         <br>
@@ -92,13 +106,19 @@ import InputBase from './../../components/InputBase.vue'
 import InputFile from './../../components/InputFile.vue'
 import RedirectToBack from '../../components/RedirectToBack.vue'
 import ModalNotifySuccessfull from '../../components/ModalNotifySuccessfull.vue'
+import { getAllUserEmails } from './../../api/users'
+import CheckBoxBase from '../../components/CheckBoxBase.vue'
 
 export default {
   name: 'NofityView',
-  components: { ButtonBase, InputBase, HeaderBase, RedirectToBack, InputFile, ModalNotifySuccessfull },
+  components: { ButtonBase, InputBase, HeaderBase, RedirectToBack, InputFile, ModalNotifySuccessfull, CheckBoxBase },
   setup() {
     const router = useRouter()
     const notification = ref({})
+    const allEmails = ref({})
+    const checkbox = ref(false)
+    const emailsFromTextareaText = ref('')
+    const emailsFromTextareaArray = computed(() => emailsFromTextareaText.value.split(',').map(email => ({ to: email })))
     const app = reactive({
       loading: false,
       disabled: true,
@@ -109,6 +129,10 @@ export default {
     const name = ref('')
     const document = reactive({})
     const documentSignedEncoded = ref(null)
+    const fetchAllUserEmails = async () => {
+      allEmails.value = await getAllUserEmails()
+    }
+    fetchAllUserEmails()
     const sign = async () => {
       console.log(document.value);
       app.loading = true
@@ -121,7 +145,10 @@ export default {
       console.log(email.value.split());
       const mapEmails = email.value.split().map(email => ({ to: email }))
       console.log(mapEmails);
-      const emails = await storeEmails({ notificationId: notification.id, emails: mapEmails })
+      const emailPayload = checkbox.value
+      ? allEmails.value.data.map(email => ({ to: email.email })).concat(emailsFromTextareaArray.value)
+      : emailsFromTextareaArray.value
+      const emails = await storeEmails({ notificationId: notification.id, emails: emailPayload })
       const notified = await notify(notification.id)
       app.loading = false
       app.showModal = true
@@ -155,6 +182,9 @@ export default {
       nextStep,
       signing,
       app,
+      checkbox,
+      emailsFromTextareaArray,
+      emailsFromTextareaText,
     }
   }
 
