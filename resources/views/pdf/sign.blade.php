@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="style.css">
     <style>
         header p {
-            text-align: center; 
+            text-align: center;
             font-size: small;
         }
         header img {
-            height:60px;
+            height:80px;
             margin-left:50px;
         }
         .fecha p {
@@ -43,39 +43,71 @@
         }
         footer img {
             height:100px;
-            margin-top:210px;
+            margin-top:150px;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
         }
     </style>
     <title>Document</title>
 </head>
 <body>
     <header>
-        <p>2022 "Año del Quincentenario de la Funcion de Toluca de Lerdo, Capital del Estado de Mexico"</p>
-        <div>
-            <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/logo.png';?>" alt="">
-        </div>
+        <p style="font-size: 11px;" >2022 "Año del Quincentenario de la Funcion de Toluca de Lerdo, Capital del Estado de Mexico"</p>
+        <table>
+            <tr>
+                <td>
+                    <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/HAyuntamiento.jpeg';?>" alt="">
+                </td>
+                <td>
+                    <span style="border: 0px; background-color: #54191b; height: 8px; border-radius: 3px; width: 350px; display: block;"></span>
+                </td>
+            </tr>
+        </table>
     </header>
     <div class="fecha">
         <p>
-            Nicolas Romero, Estado de Mexico, a
+            Nicolás Romero, Estado de México, a
             {{ "{$day} de {$monthName} de {$year}." }}
         </p>
     </div>
-    <section class="firma">
-        <p class="nombre">ATENTAMENTE</p>
-        <img src="data:image/png;base64, {!! $qrCode !!}"" alt="dddd">
-        <p>
-        {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$position['name']} {$employee['employee_number']} {$dateNow}") }}
-        </p>
-        <p class="nombre2">
-            {{ "{$employee['name']} {$employee['first_surname']} {$employee['second_surname']}" }}
-        </p>
-        <p class="nombre">
-            {{ $position['name'] }}
-        </p>
+    <section style="text-align: center; margin-top: 300px">
+    <table>
+        <tr>
+            <td style="text-align: center;">
+                <p style="font-weight: bold;">ATENTAMENTE</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <img src="data:image/png;base64, {!! $qrCode !!}"" alt="dddd">
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <p style="  font-size:12px;">
+                    {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$position['name']} {$employee['employee_number']} {$dateNow}") }}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <p style="font-weight: bold; margin-bottom: 0px;">
+                    {{ "{$employee['name']} {$employee['first_surname']} {$employee['second_surname']}" }}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <p style="font-weight: bold; font-size: 14px; margin-top: 0px;">
+                    {{ $position['name'] }}
+                </p>
+            </td>
+        </tr>
+    </table>
     </section>
     <footer>
-        <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/NR.jpeg';?>" alt="">
+        <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/GobMunicipal-2022-2024.jpeg';?>" alt="">
     </footer>
 </body>
 </html>
