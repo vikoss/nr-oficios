@@ -33,6 +33,6 @@ class NotifiedDepartments extends Mailable
      */
     public function build()
     {
-        return $this->from("{$this->user->email}")->view('emails.notified');
+        return $this->from("{$this->user->email}")->view('emails.notified')->subject("{$this->notification->name}");
     }
 }
