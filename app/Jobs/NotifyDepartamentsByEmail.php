@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Carbon\Carbon;
 use App\Mail\NotifiedDepartments;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class NotifyDepartamentsByEmail implements ShouldQueue
@@ -36,8 +37,9 @@ class NotifyDepartamentsByEmail implements ShouldQueue
      */
     public function handle()
     {
-        $this->notification->emails()->whereNull('sent_at')->get()->each(function ($email, $key) {
-            Mail::to($email->to)->send(new NotifiedDepartments($this->notification, $email));
+        $user = User::find($this->notification->user_id);
+        $this->notification->emails()->whereNull('sent_at')->get()->each(function ($email, $key) use ($user) {
+            Mail::to($email->to)->send(new NotifiedDepartments($this->notification, $email, $user));
             $email->sent_at = Carbon::now();
             $email->save();
         });

@@ -19,10 +19,11 @@ class NotifiedDepartments extends Mailable
      *
      * @return void
      */
-    public function __construct($notification, $email)
+    public function __construct($notification, $email, $user)
     {
         $this->notification = $notification;
         $this->email = $email;
+        $this->user = $user;
     }
 
     /**
@@ -32,6 +33,6 @@ class NotifiedDepartments extends Mailable
      */
     public function build()
     {
-        return $this->from('from@gmail.com')->view('emails.notified');
+        return $this->from("{$this->user->email}")->view('emails.notified');
     }
 }
