@@ -1,12 +1,13 @@
 <template>
   <main class="flex flex-wrap min-h-screen">
-    <div class="flex-grow py-7 px-6 sm:px-16 sm:pt-36 relative bg-wine" style="flex-basis: 540px;">
-      <h1 class="text-white font-medium text-4xl sm:text-6xl">
+    <div class="flex-grow py-7 px-6 sm:px-12 bg-wine h-full lg:h-auto" style="flex-basis: 540px;">
+      <div class="bg-logo-nicolas-romero h-20 w-auto bg-no-repeat bg-contain bg-center mb-5 sm:bg-left"></div>
+      <h1 class="text-white font-medium text-4xl sm:text-6xl lg:absolute lg:bottom-36">
         Bienvenido
         <br> a
-        <strong class="text-gray-100 font-bold">Circulares-Web</strong>
+        <strong class="font-bold">Circulares-Web</strong>
       </h1>
-      <h2 class="text-white text-base sm:text-xl lg:absolute sm:bottom-24">
+      <h2 class="text-white text-base mt-5 sm:text-xl lg:absolute sm:bottom-24">
         Nos renovamos para ofrecerte
         <strong class="font-bold text-gray-100">un mejor servicio.</strong>
       </h2>

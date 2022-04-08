@@ -19,6 +19,7 @@ module.exports = {
       backgroundImage: {
         'checkbox-not-checked': "url('/images/svg/CheckBoxNotChecked.svg')",
         'checkbox-checked': "url('/images/svg/CheckBoxChecked.svg')",
+        'logo-nicolas-romero': "url('/images/logo-nicolas-romero.jpeg')",
       },
     },
   },
