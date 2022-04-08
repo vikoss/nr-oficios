@@ -15,7 +15,12 @@ module.exports = {
       'gray-200': '#e0e2e0',
       'white': '#ffffff'
     },
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'checkbox-not-checked': "url('/images/svg/CheckBoxNotChecked.svg')",
+        'checkbox-checked': "url('/images/svg/CheckBoxChecked.svg')",
+      },
+    },
   },
   plugins: [],
 }
