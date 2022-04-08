@@ -9,6 +9,8 @@ use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Models\Employee;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +28,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/test', [PDFController::class, 'index']);
+Route::get('/testEmail', function () {
+    $employee = Employee::find(1);
+   return view('pdf.sign', [
+    'employee'  => $employee,
+    'position'  => $employee->position,
+    'qrCode'    => base64_encode(QrCode::generate($employee->employee_number)),
+]);
+});
 Route::get('/notified', [PDFController::class, 'notified']);
 Route::post('/upload', [PDFController::class, 'upload']);
 
