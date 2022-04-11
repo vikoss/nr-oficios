@@ -11,6 +11,15 @@
           </a>
         </h1>
         <h2 class="mb-3">Consulta los correos de quienes fueron notificados.</h2>
+        <div class="flex justify-center items-center h-full">
+          <button-base
+            class="sm:max-w-sm"
+            label="Descargar informe"
+            :loading="false"
+            @click="() => ({})"
+            :disabled="false"
+          />
+        </div>
       </div>
       <div class="col-span-5 sm:col-span-3">
         <embed
@@ -46,9 +55,10 @@ import { getNotification, getEmailsNotification } from './../../api/notification
 import TableBase from '../../components/TableBase.vue'
 import HeaderBase from '../../components/HeaderBase.vue'
 import RedirectToBack from '../../components/RedirectToBack.vue'
+import ButtonBase from './../../components/ButtonBase.vue'
 
 export default {
-  components: { TableBase, HeaderBase, RedirectToBack },
+  components: { TableBase, HeaderBase, RedirectToBack, ButtonBase },
   setup() {
     const router = useRouter()
     const route = useRoute()
