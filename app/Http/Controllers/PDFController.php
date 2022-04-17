@@ -20,7 +20,7 @@ class PDFController extends Controller
 
     public function generate()
     {
-        $pdf = PDF::loadView('pdf.sign');
+        $pdf = PDF::loadView('pdf.validated-email-report');
 
         return $pdf->stream('file.pdf');
     }
