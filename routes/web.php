@@ -13,9 +13,9 @@ use App\Http\Controllers\PDFController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/probar-pdf', [PDFController::class, 'generate']);
 
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '.*');;
 
-Route::get('/probar-pdf', [PDFController::class, 'generate']);
