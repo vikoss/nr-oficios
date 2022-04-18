@@ -5,11 +5,11 @@ import { API } from './baseUrl'
 const authenticate = (credentials) => new Promise((resolve, reject) => {
   post(`${API}/api/auth/login`, credentials)
     .then(({ data }) => {
-      localStorage.setItem('oficios-jwt', JSON.stringify(data));
-      resolve(data);
+      localStorage.setItem('oficios-jwt', JSON.stringify(data))
+      resolve(data)
     })
-    .catch(({ response }) => reject(response));
-});
+    .catch(({ response }) => reject(response))
+})
 
 const me = () => new Promise((resolve, reject) => {
   get(`${API}/api/auth/me`, {
@@ -18,11 +18,11 @@ const me = () => new Promise((resolve, reject) => {
     },
   })
     .then(({ data }) => {
-      localStorage.setItem('oficios-me', JSON.stringify(data));
-      resolve(data);
+      localStorage.setItem('oficios-me', JSON.stringify(data))
+      resolve(data)
     })
-    .catch(({ response }) => reject(response));
-});
+    .catch(({ response }) => reject(response))
+})
 
 const logout = () => new Promise((resolve, reject) => {
   post(`${API}/api/auth/logout`, {}, {
@@ -31,11 +31,11 @@ const logout = () => new Promise((resolve, reject) => {
     },
   })
     .then(({ data }) => {
-      localStorage.removeItem('oficios-me');
-      localStorage.removeItem('oficios-jwt');
-      resolve(data);
+      localStorage.removeItem('oficios-me')
+      localStorage.removeItem('oficios-jwt')
+      resolve(data)
     })
-    .catch(({ response }) => reject(response));
-});
+    .catch(({ response }) => reject(response))
+})
 
-export { authenticate, me, logout };
+export { authenticate, me, logout }
