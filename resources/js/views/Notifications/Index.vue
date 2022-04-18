@@ -5,20 +5,20 @@
     <h1 class="mt-5">Notificaciones</h1>
     <h2>Consulta el estatus de las notificaciones enviadas o pendientes.</h2>
     <table-base
-      v-show="app.notifications.isEmpty"
+      v-show="app.isEmpty"
       :headers="[{ name: 'created_at', label: 'Fecha de registro' }, { name: 'name', label: 'Nombre de la notificacion' }]"
       :data="app.notifications.data"
       :action="showNotification"
     />
     <pagination-base
-      v-show="app.notifications.isEmpty"
+      v-show="app.isEmpty"
       :currentPage="app.currentPage"
       :offset="4"
       :lastPage="app.lastPage"
       @pageChanged="fetchNotifications"
       class="float-right mt-5"
     />
-    <h2 v-show="!app.notifications.isEmpty" class="mt-4 text-xl text-wine">Niguna notification aun.</h2>
+    <h2 v-show="!app.isEmpty" class="mt-4 text-xl text-wine">Niguna notification aun.</h2>
   </main>
 </template>
 
@@ -43,7 +43,12 @@ export default {
       lastPage: computed(() => app.notifications.last_page
         ? app.notifications.last_page
         : 1),
-      isEmpty: computed(() => !!app.notifications.data),
+      isEmpty: computed(() => {
+        if (app.notifications.data) {
+          return !!app.notifications.data.length
+        }
+        return false
+      }),
     })
     const fetchNotifications = async (page) => {
       app.notifications = await getNotifications(page)
