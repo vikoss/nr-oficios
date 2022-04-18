@@ -21,16 +21,21 @@
       </h2>
       <input-base
         id="email"
-        v-model="credentials.email"
+        v-model="app.credentials.email"
         label="Correo:"
       />
       <input-base
         id="password"
-        v-model="credentials.password"
+        v-model="app.credentials.password"
         type="password"
         label="Contraseña:"
-        class="mt-2 mb-9"
+        class="mt-2 mb-2"
       />
+      <div class="mb-9">
+        <p v-show="app.error" class="text-red-error text-xs">
+          No pudimos encontrar una cuenta que coincida con lo que ingresó, revisa tus credenciales de acceso por favor.
+        </p>
+      </div>
       <button-base
         class="sm:max-w-sm ml-auto mr-0"
         label="Entrar"
@@ -55,25 +60,30 @@ export default {
   components: { InputBase, ButtonBase, },
   setup() {
     const router = useRouter()
-
-    const credentials = reactive({
-      email: '',
-      password: '',
-    })
     const app = reactive({
+      credentials: {
+        email: '',
+        password: '',
+      },
       loading: false,
-      disabled: computed(() => !credentials.email || !credentials.password),
+      disabled: computed(() => !app.credentials.email || !app.credentials.password),
+      error: false,
     })
 
     const login = async () => {
       app.loading = true
-      await authenticate(credentials)
-      await me()
+      app.error = false
+      try {
+        await authenticate(app.credentials)
+        await me()
+      } catch (error) {
+        app.error = true
+      }
       app.loading = false
       router.push({ name: 'Home' })
     }
 
-    return { credentials, login, app };
+    return { login, app };
   },
 
 }
