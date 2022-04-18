@@ -15,6 +15,9 @@ use App\Http\Controllers\PDFController;
 */
 Route::get('/probar-pdf', [PDFController::class, 'generate']);
 
+
+Route::get('/descargar/reporte-de-notificacion/{notification}', [PDFController::class, 'validatedEmailsReport']);
+
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '.*');;

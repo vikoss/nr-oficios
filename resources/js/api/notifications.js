@@ -41,8 +41,8 @@ const getNotification = (notificationId) => new Promise((resolve, reject) => {
     .catch(({ response }) => reject(response));
 });
 
-const getEmailsNotification = (notificationId) => new Promise((resolve, reject) => {
-  get(`${API}/api/notifications/${notificationId}/emails`, {
+const getEmailsNotification = ({ id, page = 1 }) => new Promise((resolve, reject) => {
+  get(`${API}/api/notifications/${id}/emails?page=${page}`, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },

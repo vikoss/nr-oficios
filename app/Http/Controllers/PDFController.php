@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\NotifiedDepartments;
 use App\Models\Employee;
+use App\Models\Notification;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -105,5 +106,14 @@ class PDFController extends Controller
     {
         $path = Storage::put('notifications', $request->file('file'));
         return Storage::url($path);
+    }
+
+    public function validatedEmailsReport(Notification $notification)
+    {
+        $pdf = PDF::loadView('pdf.validated-email-report', [
+            'emails' => $notification->emails()->get()->toArray()
+        ]);
+
+        return $pdf->stream("notificacion {$notification->name} {$notification->id}.pdf");
     }
 }

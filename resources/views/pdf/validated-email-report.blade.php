@@ -1,5 +1,6 @@
 <?php
-    $dateNow = Carbon\Carbon::now();
+    use Carbon\Carbon;
+    $dateNow = Carbon::now();
     $monthName = $dateNow->monthName;
     $day = $dateNow->day;
     $year = $dateNow->year;
@@ -11,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Reporte de emails validados</title>
 </head>
 <body background="./../public/images/FondeDePantalla.jpeg" style="background-size:cover; background-repeat: no-repeat; heigth:100%; width: 100%; margin-left:15px; ">
     <div style="margin-bottom: 100px;">
@@ -20,19 +21,21 @@
             {{ "{$day} de {$monthName} de {$year}." }}
         </p>
     </div>
-<table style="width:90% text-align: center" >
+<table style="width: 90%; font-size: 12px; text-align: center; border-spacing: 20px; border-collapse: separate;" >
   <tr style="text-align: center; color: #54191b;">
     <th>Fecha de registro</th>
     <th>Fecha de envio</th>
     <th>Para</th>
     <th>Validado de recibido</th>
   </tr>
-  <tr style="text-align: center;">
-    <td style="border-left:10px solid #54191b; height: 71px;">2022-04-08</td>
-    <td>2022-04-08</td>
-    <td>Vikoss.yiss@gmail.com</td>
-    <td>si/no</td>
+  @foreach ($emails as $email)
+  <tr>
+    <td style="border-left: 10px solid #54191b; border-radius: 5px;">{{ Carbon::createFromDate($email['created_at'])->toDateTimeString() }}</td>
+    <td>{{ Carbon::createFromDate($email['sent_at'])->toDateTimeString() }}</td>
+    <td>{{ $email['to'] }}</td>
+    <td>{{ $email['verified_at'] ? Carbon::createFromDate($email['verified_at'])->toDateTimeString() : 'No' }}</td>
   </tr>
+  @endforeach
 </table>
 
 </body>
