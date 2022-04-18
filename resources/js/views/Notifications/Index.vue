@@ -5,44 +5,54 @@
     <h1 class="mt-5">Notificaciones</h1>
     <h2>Consulta el estatus de las notificaciones enviadas o pendientes.</h2>
     <table-base
-      v-if="notifications.items"
+      v-show="app.notifications.isEmpty"
       :headers="[{ name: 'created_at', label: 'Fecha de registro' }, { name: 'name', label: 'Nombre de la notificacion' }]"
-      :data="notifications.items"
+      :data="app.notifications.data"
       :action="showNotification"
     />
-    <h2 v-else>Niguna notification aun.</h2>
+    <pagination-base
+      v-show="app.notifications.isEmpty"
+      :currentPage="app.currentPage"
+      :offset="4"
+      :lastPage="app.lastPage"
+      @pageChanged="fetchNotifications"
+      class="float-right mt-5"
+    />
+    <h2 v-show="!app.notifications.isEmpty" class="mt-4 text-xl text-wine">Niguna notification aun.</h2>
   </main>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { getNotifications } from './../../api/notifications'
 import TableBase from '../../components/TableBase.vue'
 import HeaderBase from '../../components/HeaderBase.vue'
 import RedirectToBack from '../../components/RedirectToBack.vue'
+import PaginationBase from '../../components/PaginationBase.vue'
 
 export default {
-  components: { TableBase, HeaderBase, RedirectToBack },
+  components: { TableBase, HeaderBase, RedirectToBack, PaginationBase },
   setup() {
     const router = useRouter()
-    const notifications = reactive({
-      items: [],
+    const app = reactive({
+      notifications: {},
+      currentPage: computed(() => app.notifications.current_page
+        ? app.notifications.current_page
+        : 1),
+      lastPage: computed(() => app.notifications.last_page
+        ? app.notifications.last_page
+        : 1),
+      isEmpty: computed(() => !!app.notifications.data),
     })
-    const fetchNotifications = async() => {
-      const { data } = await getNotifications()
-      notifications.items = data
-      console.log(data);
+    const fetchNotifications = async (page) => {
+      app.notifications = await getNotifications(page)
     }
     fetchNotifications()
     const showNotification = (notificationId) => router.push({ name: 'NotificationDetails', params: { notification: notificationId }})
 
-    return { notifications, showNotification }
+    return { app, showNotification, fetchNotifications }
   },
 
 }
 </script>
-
-<style>
-
-</style>
