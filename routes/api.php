@@ -29,12 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/test', [PDFController::class, 'index']);
 Route::get('/testEmail', function () {
-    $employee = Employee::find(1);
-   return view('pdf.sign', [
-    'employee'  => $employee,
-    'position'  => $employee->position,
-    'qrCode'    => base64_encode(QrCode::generate($employee->employee_number)),
-]);
+    $pdf = PDF::loadView('pdf.sign', [
+        'employee'  => ["name" => "", "first_surname" => "", "second_surname" => "", "employee_number" => "", ],
+        'position'  => ["name" => "", ],
+        'qrCode'    => base64_encode(QrCode::generate("1234")),
+    ]);
+
+    return $pdf->stream('file.pdf');
 });
 Route::get('/notified', [PDFController::class, 'notified']);
 Route::post('/upload', [PDFController::class, 'upload']);
