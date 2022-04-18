@@ -17,8 +17,8 @@ const storeNotification = ({ name, document }) => new Promise((resolve, reject) 
     .catch(({ response }) => reject(response));
 });
 
-const getNotifications = () => new Promise((resolve, reject) => {
-  get(`${API}/api/users/${currentUser().id}/notifications`, {
+const getNotifications = (page = 1) => new Promise((resolve, reject) => {
+  get(`${API}/api/users/${currentUser().id}/notifications?page=${page}`, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
     },
