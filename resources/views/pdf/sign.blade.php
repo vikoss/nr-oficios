@@ -5,77 +5,25 @@
     $year = $dateNow->year;
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="margin: 0; padding: 0; ">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <style>
-        header p {
-            text-align: center;
-            font-size: small;
-        }
-        header img {
-            height:80px;
-            margin-left:50px;
-        }
-        .fecha p {
-            text-align: right;
-            font-size:15px;
-            margin-top:30px;
-        }
-        .firma {
-            margin-top: 280px;
-            margin-left: 285px;
-        }
-        .firma img {
-            margin-left:-15px;
-        }
-        .nombre {
-            font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-        .nombre2 {
-            font-weight: bold;
-            font-family: Arial, Helvetica, sans-serif;
-            margin-left:-100px;
-        }
-        footer img {
-            height:100px;
-            margin-top:150px;
-        }
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-        }
     </style>
     <title>Document</title>
 </head>
-<body>
-    <header>
-        <p style="font-size: 11px;" >2022 "Año del Quincentenario de la Funcion de Toluca de Lerdo, Capital del Estado de Mexico"</p>
-        <table>
-            <tr>
-                <td>
-                    <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/HAyuntamiento.jpeg';?>" alt="">
-                </td>
-                <td>
-                    <span style="border: 0px; background-color: #54191b; height: 8px; border-radius: 3px; width: 350px; display: block;"></span>
-                </td>
-            </tr>
-        </table>
-    </header>
-    <div class="fecha">
-        <p>
+<body background="./../public/images/FondeDePantalla.jpeg" style="background-size:cover; background-repeat: no-repeat; heigth:100%; width: 100%; margin-left:15px; ">
+    <div style="margin-bottom: 100px;">
+        <p style="margin-top: 150px; text-align: right; margin-right: 25px; margin-bottom: 350px;">
             Nicolás Romero, Estado de México, a
             {{ "{$day} de {$monthName} de {$year}." }}
         </p>
     </div>
-    <section style="text-align: center; margin-top: 300px">
-    <table>
+    <table style="margin-left: auto; margin-right: auto;">
         <tr>
-            <td style="text-align: center;">
-                <p style="font-weight: bold;">ATENTAMENTE</p>
+            <td>
+                <p style="font-weight: bold; text-align: center;">ATENTAMENTE</p>
             </td>
         </tr>
         <tr>
@@ -105,9 +53,5 @@
             </td>
         </tr>
     </table>
-    </section>
-    <footer>
-        <img src="<?php echo $_SERVER["DOCUMENT_ROOT"].'/images/GobMunicipal-2022-2024.jpeg';?>" alt="">
-    </footer>
 </body>
 </html>
