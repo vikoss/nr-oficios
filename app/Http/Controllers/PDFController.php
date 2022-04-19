@@ -114,6 +114,6 @@ class PDFController extends Controller
             'emails' => $notification->emails()->get()->toArray()
         ]);
 
-        return $pdf->stream("notificacion {$notification->name} {$notification->id}.pdf");
+        return $pdf->download("notificacion {$notification->name} {$notification->id}.pdf");
     }
 }
