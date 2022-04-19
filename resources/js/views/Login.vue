@@ -5,7 +5,7 @@
       <h1 class="text-white font-medium text-4xl sm:text-6xl lg:absolute lg:bottom-36">
         Bienvenido
         <br> a
-        <strong class="font-bold">Circulares-Web</strong>
+        <strong class="font-bold">Circulares Nicolás Romero</strong>
       </h1>
       <h2 class="text-white text-base mt-5 sm:text-xl lg:absolute sm:bottom-24">
         Nos renovamos para ofrecerte
