@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Notification extends Model
 {
@@ -14,5 +15,15 @@ class Notification extends Model
     public function emails()
     {
         return $this->hasMany(Email::class);
+    }
+
+    public function getCreatedAtAttribute($date)
+    {
+        return  Carbon::createFromDate($date)->format('Y-m-d H:i');
+    }
+
+    public function getUpdatedAtAttribute($date)
+    {
+        return Carbon::createFromDate($date)->format('Y-m-d H:i');
     }
 }
