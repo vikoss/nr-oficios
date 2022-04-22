@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import checkJWT from './../middleware/checkJWT'
 
 const routes = [
   {
@@ -10,26 +11,41 @@ const routes = [
     path: '/',
     name: 'Home',
     component: () => import ('./../views/Home.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
   },
   {
     path: '/notificaciones/:notification/correos/:email',
     name: 'Emails',
     component: () => import ('./../views/Emails/Details.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
   },
   {
     path: '/notificaciones/:notification',
     name: 'NotificationDetails',
     component: () => import ('./../views/Notifications/Details.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
   },
   {
     path: '/notificaciones',
     name: 'Notifications',
     component: () => import ('./../views/Notifications/Index.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
   },
   {
     path: '/notificar',
     name: 'Notify',
     component: () => import ('../views/Notifications/Notify.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
   },
   {
     path: '/validacion/:email',
