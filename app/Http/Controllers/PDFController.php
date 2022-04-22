@@ -56,7 +56,6 @@ class PDFController extends Controller
 
     public function sign(Request $request)
     {
-        //return auth()->user()->toArray();
         $employee = Employee::find(auth()->user()->employee_id);
         $pdfSign = PDF::loadView('pdf.sign', [
             'employee'  => $employee,
@@ -67,10 +66,7 @@ class PDFController extends Controller
         ]);
         $pathRandomTmp = 'notifications/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
-        //return 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.Storage::path($pathRandomTmp);
-        $urlFinal = 'https://nr-oficios.s3.us-west-1.amazonaws.com/'.$pathRandomTmp;
-        /* return $urlFinal;
-        return Storage::download($urlFinal); */
+        $urlFinal = env('AWS_USE_PATH_STYLE_ENDPOINT').'/'.$pathRandomTmp;
         $files = [$request->file('pdf')->path(), file_get_contents($urlFinal)];
 
         $fpdi = new FPDI;
@@ -89,8 +85,6 @@ class PDFController extends Controller
             }
 
         }
-        // store
-        //return base64_encode($fpdi->Output('S'));
         $pathF = Storage::put($pathRandomTmp, $fpdi->Output('S'));
         return $urlFinal;
     }
