@@ -1,7 +1,7 @@
 <template>
   <main class="flex flex-wrap min-h-screen">
-    <div class="flex-grow py-7 px-6 sm:px-12 bg-wine h-full lg:h-auto" style="flex-basis: 540px;">
-      <div class="bg-logo-nicolas-romero h-20 w-auto bg-no-repeat bg-contain bg-center mb-5 sm:bg-left"></div>
+    <div class="flex-grow py-7 px-6 sm:px-12 bg-wine h-full lg:h-auto text-center md:text-left" style="flex-basis: 540px;">
+      <div class="bg-logo-nr h-24 w-auto bg-no-repeat bg-contain bg-center mb-5 sm:h-28 md:h-44 md:bg-left"></div>
       <h1 class="text-white font-medium text-4xl sm:text-6xl lg:absolute lg:bottom-36">
         Bienvenido
         <br> a
@@ -13,7 +13,7 @@
         <strong class="font-bold text-gray-100">un mejor servicio.</strong>
       </h2>
     </div>
-    <div class="flex-grow py-7 px-6 sm:px-16 sm:pt-36 bg-white" style="flex-basis: 540px;">
+    <div class="flex-grow py-7 px-6 sm:px-16 sm:pt-36 bg-white" style="flex-basis: 484px;">
       <h1 class="text-3xl text-blue font-medium mb-2 text-wine">
         Inicia sesión
       </h1>
