@@ -61,7 +61,9 @@ class PDFController extends Controller
         $pdfSign = PDF::loadView('pdf.sign', [
             'employee'  => $employee,
             'position'  => $employee->position,
-            'qrCode'    => base64_encode(QrCode::generate($employee->employee_number)),
+            'qrCode'    => base64_encode(QrCode::generate(
+               "{$employee->name} {$employee->first_surname} {$employee->second_surname} - {$employee->position->name}"
+            )),
         ]);
         $pathRandomTmp = 'notifications/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
