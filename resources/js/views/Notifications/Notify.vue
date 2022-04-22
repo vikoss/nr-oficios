@@ -28,6 +28,7 @@
           label="Firmar"
           :loading="app.loading"
           @click="sign"
+          v-show="fileTmp"
           :disabled="false"
         />
         <embed
@@ -57,6 +58,26 @@
           label="Notificar a todos"
           v-model="checkbox"
         />
+        <div v-show="checkbox">
+          <div class="my-3">
+            <p class="cursor-pointer text-black text-lg underline mr-8 inline" @click="markAllEmails">Marcar todos</p>
+            <p class="cursor-pointer text-black text-lg underline inline" @click="desmarkAllEmails">Desmarcar todos</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              v-for="(email, index) in allEmailsWithMarks"
+              :key="index"
+            >
+              <check-box-base
+                :id="email.email"
+                :label="email.email"
+                v-model="allEmailsWithMarks[index].mark"
+                small
+              />
+            </div>
+          </div>
+        </div>
+        <!-- ----------------------------------------- -->
         <p>Y adicionalmente a:</p>
         <p>Recuerda agregar los correos separados por comas</p>
         <label for="" class="text-wine text-base font-medium block">
@@ -68,7 +89,7 @@
           id="emails"
           cols="30"
           rows="5"
-          placeholder="juan@nicolasromero.gob.mx,pedro@nicolasromero.gob.mx"
+          placeholder="juan@gmail.com,pedro@gmail.com"
           v-model="emailsFromTextareaText"
         />
         <br>
@@ -86,7 +107,7 @@
           label="Notificar"
           :loading="app.loading"
           @click="store"
-          :disabled="false"
+          :disabled="isDisabledButtonNotify"
         />
       </section>
     </div>
@@ -116,6 +137,7 @@ export default {
     const router = useRouter()
     const notification = ref({})
     const allEmails = ref({})
+    const allEmailsWithMarks = ref([])
     const checkbox = ref(false)
     const emailsFromTextareaText = ref('')
     const emailsFromTextareaArray = computed(() => emailsFromTextareaText.value.split(',').map(email => ({ to: email })))
@@ -131,6 +153,7 @@ export default {
     const documentSignedEncoded = ref(null)
     const fetchAllUserEmails = async () => {
       allEmails.value = await getAllUserEmails()
+      allEmailsWithMarks.value = allEmails.value.data.map((email) => ({ email: email.email, mark: true }))
     }
     fetchAllUserEmails()
     const sign = async () => {
@@ -145,16 +168,15 @@ export default {
       console.log(email.value.split());
       const mapEmails = email.value.split().map(email => ({ to: email }))
       console.log(mapEmails);
+      const allEmailsMarked = allEmailsWithMarks.value.filter((email) => email.mark).map((item) => ({ to: item.email }))
       const emailPayload = checkbox.value
-      ? allEmails.value.data.map(email => ({ to: email.email })).concat(emailsFromTextareaArray.value)
+      ? allEmailsMarked.concat(emailsFromTextareaArray.value.filter((email) => email.to))
       : emailsFromTextareaArray.value
+      console.log(emailPayload)
       const emails = await storeEmails({ notificationId: notification.id, emails: emailPayload })
       const notified = await notify(notification.id)
       app.loading = false
       app.showModal = true
-      /* alert('Notificacion enviada.')
-      //router.push({ name: 'Home' })
-      console.log(notified) */
     }
     const handleFile = (e) => {
       document.value = e.target.files[0]
@@ -171,6 +193,14 @@ export default {
       signing.value = false
     }
 
+    const markAllEmails = () => {
+      allEmailsWithMarks.value.forEach((email) => (email.mark = true))
+    }
+    const desmarkAllEmails = () => {
+      allEmailsWithMarks.value.forEach((email) => (email.mark = false))
+    }
+    const isDisabledButtonNotify = computed(() => !name.value)
+
     return {
       sign,
       handleFile,
@@ -185,6 +215,11 @@ export default {
       checkbox,
       emailsFromTextareaArray,
       emailsFromTextareaText,
+      allEmails,
+      allEmailsWithMarks,
+      markAllEmails,
+      desmarkAllEmails,
+      isDisabledButtonNotify,
     }
   }
 
