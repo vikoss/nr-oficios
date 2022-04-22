@@ -66,7 +66,7 @@ class PDFController extends Controller
         ]);
         $pathRandomTmp = 'notifications/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
-        $urlFinal = env('AWS_USE_PATH_STYLE_ENDPOINT').'/'.$pathRandomTmp;
+        $urlFinal = env('AWS_URL_ENDPOINT').'/'.$pathRandomTmp;
         $files = [$request->file('pdf')->path(), file_get_contents($urlFinal)];
 
         $fpdi = new FPDI;
