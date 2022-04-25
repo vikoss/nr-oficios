@@ -64,7 +64,7 @@ class PDFController extends Controller
                "{$employee->name} {$employee->first_surname} {$employee->second_surname} - {$employee->position->name}"
             )),
         ]);
-        $pathRandomTmp = 'notifications/'.Str::uuid().'.pdf';
+        $pathRandomTmp = 'notifications/users/'.auth()->user()->id.'/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
         $urlFinal = env('AWS_URL_ENDPOINT').'/'.$pathRandomTmp;
         $files = [$request->file('pdf')->path(), file_get_contents($urlFinal)];
