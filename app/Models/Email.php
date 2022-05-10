@@ -22,11 +22,21 @@ class Email extends Model
 
     public function getCreatedAtAttribute($date)
     {
-        return  Carbon::createFromDate($date)->format('Y-m-d H:i');
+        return (bool) $date ? Carbon::createFromDate($date)->format('Y-m-d H:i') : null;
     }
 
     public function getUpdatedAtAttribute($date)
     {
-        return Carbon::createFromDate($date)->format('Y-m-d H:i');
+        return (bool) $date ? Carbon::createFromDate($date)->format('Y-m-d H:i') : null;
+    }
+
+    public function getVerifiedAtAttribute($date)
+    {
+        return (bool) $date ? Carbon::createFromDate($date)->format('Y-m-d H:i') : null;
+    }
+
+    public function getSentAtAttribute($date)
+    {
+        return (bool) $date ? Carbon::createFromDate($date)->format('Y-m-d H:i') : null;
     }
 }
