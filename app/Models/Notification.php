@@ -12,9 +12,20 @@ class Notification extends Model
 
     protected $fillable = ['document', 'name'];
 
+    /**
+     * Get the emails for the notification.
+     */
     public function emails()
     {
         return $this->hasMany(Email::class);
+    }
+
+    /**
+     * Get the user associated with the notification.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function getCreatedAtAttribute($date)
