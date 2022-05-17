@@ -48,6 +48,14 @@ const routes = [
     },
   },
   {
+    path: '/inbox',
+    name: 'Inbox',
+    component: () => import ('../views/Emails/Inbox.vue'),
+    meta: {
+      middleware: checkJWT,
+    },
+  },
+  {
     path: '/validacion/:email',
     name: 'EmailValidation',
     component: () => import ('./../views/Emails/Validation.vue'),
