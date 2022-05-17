@@ -6,18 +6,21 @@
     <tr
       class="h-16 rounded-md hover:underline cursor-pointer rounded-l-md"
       style="box-shadow: 0px 0px 16px #00000029;"
+      :class="{ 'text-gray': !!item[propertyForTextGray] }"
       v-for="(item, index) in data"
       :key="index"
       @click="action(item.id)"
     >
       <td v-for="(header, index) in headers" :key="index">
-        {{ item[header.name] }}
+        {{ flattenData ? flattenObjectData(item)[header.name] : item[header.name] }}
       </td>
     </tr>
   </table>
 </template>
 
 <script>
+import { flattenObject } from './../helpers/Objects'
+
 export default {
   name: 'TableBase',
   props: {
@@ -33,6 +36,19 @@ export default {
       type: Function,
       default: () => ({}),
     },
+    flattenData: {
+      type: Boolean,
+      default: false,
+    },
+    propertyForTextGray: {
+      type: String,
+      default: '',
+    },
+  },
+  setup () {
+    const flattenObjectData = flattenObject
+
+    return { flattenObjectData }
   },
 }
 </script>
