@@ -58,6 +58,14 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Get the inbox associated with the user.
+     */
+    public function inbox()
+    {
+        return $this->hasMany(Email::class, 'to', 'email')->with('notification.user');
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
