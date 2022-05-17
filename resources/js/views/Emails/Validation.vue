@@ -22,7 +22,7 @@ export default {
         await updateEmail(email)
       }
       const notification = await getNotification(email.notification_id)
-      window.location.href = notification.document;
+      window.location.href = notification.document
     }
     fetchEmail()
   },
