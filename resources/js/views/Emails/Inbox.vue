@@ -56,7 +56,10 @@ export default {
       app.notifications = await getInbox(page)
     }
     fetchNotifications()
-    const showItem = (id) => router.push({ name: 'EmailValidation', params: { email: id }})
+    const showItem = (id) => {
+      const route = router.resolve({ name: 'EmailValidation', params: { email: id }})
+      window.open(route.href)
+    }
 
     return { app, showItem, fetchNotifications }
   },
