@@ -19,4 +19,9 @@ class UserController extends Controller
             : User::count()
         );
     }
+
+    public function inbox(Request $request, User $user)
+    {
+        return $user->inbox()->paginate($request->get('per_page', 15));
+    }
 }
