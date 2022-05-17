@@ -39,4 +39,12 @@ class Email extends Model
     {
         return (bool) $date ? Carbon::createFromDate($date)->format('Y-m-d H:i') : null;
     }
+
+    /**
+     * Get the notification associated with the email.
+     */
+    public function notification()
+    {
+        return $this->belongsTo(Notification::class);
+    }
 }
