@@ -44,6 +44,7 @@ Route::post('/sign', [PDFController::class, 'sign']);
 Route::post('/users/{user}/notifications', [UserNotificationController::class, 'store']);
 Route::get('/users/{user}/notifications', [UserNotificationController::class, 'index']);
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{user}/inbox', [UserController::class, 'inbox']);
 Route::post('/notifications/{notification}/notify', [NotificationController::class, 'notify']);
 Route::get('/notifications/{notification}', [NotificationController::class, 'show']);
 Route::post('/notifications/{notification}/emails', [NotificationEmailController::class, 'store']);
