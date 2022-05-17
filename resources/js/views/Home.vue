@@ -11,9 +11,16 @@
       </div>
       <div class="col-span-1">
         <card-base
-          label="Ver notificaciones"
+          label="Ver notificaciones enviadas"
           description="Estadisticas de notificaciones realizadas."
           :redirect-to="{ name: 'Notifications' }"
+        />
+      </div>
+      <div class="col-span-1">
+        <card-base
+          label="Ver notificaciones recibidas"
+          description="Bandeja de entrada para notificaciones recibidas."
+          :redirect-to="{ name: 'Inbox' }"
         />
       </div>
     </div>
