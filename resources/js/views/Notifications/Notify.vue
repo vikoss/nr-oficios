@@ -127,7 +127,7 @@ import InputBase from './../../components/InputBase.vue'
 import InputFile from './../../components/InputFile.vue'
 import RedirectToBack from '../../components/RedirectToBack.vue'
 import ModalNotifySuccessfull from '../../components/ModalNotifySuccessfull.vue'
-import { getAllUserEmails } from './../../api/users'
+import { getAllEmails } from './../../api/users'
 import CheckBoxBase from '../../components/CheckBoxBase.vue'
 
 export default {
@@ -152,7 +152,7 @@ export default {
     const document = reactive({})
     const documentSignedEncoded = ref(null)
     const fetchAllUserEmails = async () => {
-      allEmails.value = await getAllUserEmails()
+      allEmails.value = await getAllEmails()
       allEmailsWithMarks.value = allEmails.value.data.map((email) => ({ email: email.email, mark: true }))
     }
     fetchAllUserEmails()
