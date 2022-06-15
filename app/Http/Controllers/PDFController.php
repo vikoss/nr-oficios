@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\NotifiedDepartments;
 use App\Models\Employee;
 use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -56,14 +57,16 @@ class PDFController extends Controller
 
     public function sign(Request $request)
     {
-        $employee = Employee::find(auth()->user()->employee_id);
-        $pdfSign = PDF::loadView('pdf.sign', [
-            'employee'  => $employee,
-            'position'  => $employee->position,
-            'qrCode'    => base64_encode(QrCode::generate(
-               "{$employee->name} {$employee->first_surname} {$employee->second_surname} - {$employee->position->name}"
-            )),
-        ]);
+        $usersId = $request->get('signatory_users_id', false)
+            ? explode(',', $request->get('signatory_users_id'))
+            : [auth()->user()->id];
+        $employeesId = User::select('employee_id')->whereIn('id',  $usersId)->get();
+        $employees = Employee::whereIn('id', $employeesId)->get();
+        $pdfSign = PDF::loadView('pdf.sign', ['employees' => $employees->each(function ($employee) {
+            $employee->qr_code = base64_encode(QrCode::generate(
+                "{$employee->name} {$employee->first_surname} {$employee->second_surname} - {$employee->position->name}"
+            ));
+        })->toArray()]);
         $pathRandomTmp = 'notifications/users/'.auth()->user()->id.'/'.Str::uuid().'.pdf';
         Storage::put($pathRandomTmp, $pdfSign->output());
         $urlFinal = env('AWS_URL_ENDPOINT').'/'.$pathRandomTmp;
