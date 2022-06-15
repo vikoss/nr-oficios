@@ -2,8 +2,8 @@ import { get } from 'axios'
 import { API } from './baseUrl'
 import { JWT, currentUser } from '../helpers/localStorage'
 
-const getAllEmails = () => new Promise((resolve, reject) => {
-  get(`${API}/api/users?fields=email`, {
+const getAllEmails = (fields = 'email') => new Promise((resolve, reject) => {
+  get(`${API}/api/users?fields=${fields}`, {
     headers: {
       Authorization: 'Bearer ${JWT()}',
     },
