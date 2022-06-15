@@ -2,9 +2,11 @@ import { post, get } from 'axios'
 import { JWT, currentUser } from '../helpers/localStorage'
 import { API } from './baseUrl'
 
-const signDocument = (document) => new Promise((resolve, reject) => {
+const signDocument = ({ signatory_users_id = '', document }) => new Promise((resolve, reject) => {
   const body = new FormData()
   body.append('pdf', document)
+  body.append('signatory_users_id', signatory_users_id)
+
   post(`${API}/api/sign`, body, {
     headers: {
       Authorization: `Bearer ${JWT()}`,
