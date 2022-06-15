@@ -26,15 +26,18 @@
                 <p style="font-weight: bold; text-align: center;">ATENTAMENTE</p>
             </td>
         </tr>
+    </table>
+    @foreach ($employees as $employee)
+    <table style="margin-left: auto; margin-right: auto;">
         <tr>
             <td style="text-align: center;">
-                <img src="data:image/png;base64, {!! $qrCode !!}"" alt="dddd">
+                <img src="data:image/png;base64, {!! $employee['qr_code'] !!}" alt="Codigo QR">
             </td>
         </tr>
         <tr>
             <td style="text-align: center;">
-                <p style="  font-size:12px;">
-                    {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$position['name']} {$employee['employee_number']} {$dateNow}") }}
+                <p style="font-size:12px;">
+                    {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$employee['position']['name']} {$employee['employee_number']} {$dateNow}") }}
                 </p>
             </td>
         </tr>
@@ -48,10 +51,11 @@
         <tr>
             <td style="text-align: center;">
                 <p style="font-weight: bold; font-size: 14px; margin-top: 0px;">
-                    {{ $position['name'] }}
+                    {{ $employee['position']['name'] }}
                 </p>
             </td>
         </tr>
     </table>
+    @endforeach
 </body>
 </html>
