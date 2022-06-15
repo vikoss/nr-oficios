@@ -23,13 +23,38 @@
           width="100%"
           alt="Documento para firmar"
         />
+        <div v-show="fileTmp" class="my-8">
+          <check-box-base
+            id="sygnatory-is-added"
+            label="Agregar firmante"
+            v-model="app.signatoryIsAdded"
+          />
+        </div>
+        <div v-show="app.signatoryIsAdded" class="flex">
+          <input-base
+            id="sygnatory-user"
+            v-model="app.signatoryUser"
+            label="Correo:"
+          />
+          <button-base
+            class="sm:max-w-sm ml-auto mr-0 my-8"
+            label="Agregar firmante"
+            :loading="false"
+            @click="addSignatoryUser"
+            :disabled="false"
+          />
+        </div>
+        <div v-show="app.signatoryIsAdded">
+          <p v-show="app.existSignatoryUser">Firmante agregado correctamente</p>
+          <p v-show="app.notFoundSignatoryUser" class="text-red-error">Firmante no encontrado</p>
+        </div>
         <button-base
           class="sm:max-w-sm ml-auto mr-0 my-8"
           label="Firmar"
           :loading="app.loading"
           @click="sign"
           v-show="fileTmp"
-          :disabled="false"
+          :disabled="app.signatoryIsAdded ? !(app.existSignatoryUser) : false"
         />
         <embed
           v-show="documentSignedEncoded"
@@ -129,6 +154,7 @@ import RedirectToBack from '../../components/RedirectToBack.vue'
 import ModalNotifySuccessfull from '../../components/ModalNotifySuccessfull.vue'
 import { getAllEmails } from './../../api/users'
 import CheckBoxBase from '../../components/CheckBoxBase.vue'
+import { currentUser } from './../../helpers/localStorage'
 
 export default {
   name: 'NofityView',
@@ -145,6 +171,11 @@ export default {
       loading: false,
       disabled: true,
       showModal: false,
+      signatoryUser: '',
+      signatoryUserId: null,
+      existSignatoryUser: false,
+      notFoundSignatoryUser: false,
+      signatoryIsAdded: false,
     })
     const emails = ref([])
     const email = ref('')
@@ -152,14 +183,20 @@ export default {
     const document = reactive({})
     const documentSignedEncoded = ref(null)
     const fetchAllUserEmails = async () => {
-      allEmails.value = await getAllEmails()
+      allEmails.value = await getAllEmails('email,id')
       allEmailsWithMarks.value = allEmails.value.data.map((email) => ({ email: email.email, mark: true }))
     }
     fetchAllUserEmails()
     const sign = async () => {
       console.log(document.value);
       app.loading = true
-      documentSignedEncoded.value = await signDocument(document.value)
+      const body = {
+        document: document.value,
+        signatory_users_id: app.signatoryIsAdded
+          ? [currentUser().id, app.signatoryUserId]
+          : ''
+      }
+      documentSignedEncoded.value = await signDocument(body)
       app.loading = false
     }
     const store = async () => {
@@ -201,6 +238,18 @@ export default {
     }
     const isDisabledButtonNotify = computed(() => !name.value)
 
+    const addSignatoryUser = () => {
+      app.notFoundSignatoryUser = false
+      if (allEmails.value.data.map((item) => item.email).includes(app.signatoryUser)) {
+        const user = allEmails.value.data.find((item) => item.email === app.signatoryUser)
+        app.signatoryUserId = user.id
+        app.existSignatoryUser = true
+      } else {
+        app.notFoundSignatoryUser = true
+        app.existSignatoryUser = false
+      }
+    }
+
     return {
       sign,
       handleFile,
@@ -220,6 +269,7 @@ export default {
       markAllEmails,
       desmarkAllEmails,
       isDisabledButtonNotify,
+      addSignatoryUser,
     }
   }
 
