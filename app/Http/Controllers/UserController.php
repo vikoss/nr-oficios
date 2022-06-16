@@ -20,8 +20,8 @@ class UserController extends Controller
         );
     }
 
-    public function inbox(Request $request, User $user)
+    public function inbox(User $user)
     {
-        return $user->inbox()->paginate($request->get('per_page', 15));
+        return $user->inbox()->orderBy('id', 'desc')->paginate();
     }
 }

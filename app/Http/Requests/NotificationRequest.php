@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Storage;
 
 class NotificationRequest extends FormRequest
 {
@@ -26,22 +25,7 @@ class NotificationRequest extends FormRequest
     {
         return [
             'document'  => 'required',
-            'name'      => 'required'
+            'name'      => 'required',
         ];
     }
-
-    /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    /* protected function prepareForValidation()
-    {
-        $path = Storage::put('notifications', base64_decode($this->document));
-
-        $this->merge([
-            'document'  => Storage::url($path),
-            'name'      => strtolower($this->name)
-        ]);
-    } */
 }
