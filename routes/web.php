@@ -13,8 +13,6 @@ use App\Http\Controllers\PDFController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/probar-pdf', [PDFController::class, 'generate']);
-
 
 Route::get('/descargar/reporte-de-notificacion/{notification}', [PDFController::class, 'validatedEmailsReport']);
 

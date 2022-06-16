@@ -2,30 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\NotifiedDepartments;
-use App\Models\Employee;
-use App\Models\Notification;
-use App\Models\User;
-use Illuminate\Contracts\Cache\Store;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use setasign\Fpdi\Fpdi;
-use PDF;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
 use setasign\Fpdi\PdfParser\StreamReader;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use App\Models\Notification;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Models\Employee;
+use setasign\Fpdi\Fpdi;
+use App\Models\User;
+use PDF;
 
 class PDFController extends Controller
 {
-
-    public function generate()
-    {
-        $pdf = PDF::loadView('pdf.validated-email-report');
-
-        return $pdf->stream('file.pdf');
-    }
 
     public function index(Request $request)
     {   //return $request->file('sign')->path();
@@ -46,13 +35,6 @@ class PDFController extends Controller
 
 
         return $pdf->Output();
-    }
-
-    public function notified(Request $request)
-    {
-        Mail::to('juan@gmail.com')->send(new NotifiedDepartments(['greet' => 'World!']));
-
-        return 'gg';
     }
 
     public function sign(Request $request)
@@ -101,11 +83,11 @@ class PDFController extends Controller
 
     */
 
-    public function upload(Request $request)
+    /* public function upload(Request $request)
     {
         $path = Storage::put('notifications', $request->file('file'));
         return Storage::url($path);
-    }
+    } */
 
     public function validatedEmailsReport(Notification $notification)
     {
