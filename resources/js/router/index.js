@@ -60,6 +60,17 @@ const routes = [
     name: 'EmailValidation',
     component: () => import ('./../views/Emails/Validation.vue'),
   },
+  {
+    path: '/',
+    name: 'Index',
+    component: () => import ('./../views/Login.vue'),
+  },
+  {
+    path: '/users',
+    name: 'index',
+    component: () => import ('./../views/Users/Index.vue'),
+  },
+
 ];
 
 const router = createRouter({
