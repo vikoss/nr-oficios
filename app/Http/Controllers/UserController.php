@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,5 +25,18 @@ class UserController extends Controller
     public function inbox(User $user)
     {
         return $user->inbox()->orderBy('id', 'desc')->paginate();
+    }
+
+    public function store(Request $request)
+    {
+        //return $request->rol_id;
+        $role = Role::find($request->role_id);
+        //return $role;
+        $employee = Employee::create($request->all());
+        $request['employee_id'] = $employee->id;
+        $request['role_id'] = $role->id;
+        $request['password'] = bcrypt($request->password);
+        $user = User::create($request->all());
+        return $user;
     }
 }

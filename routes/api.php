@@ -7,6 +7,10 @@ use App\Http\Controllers\NotificationEmailController;
 use App\Http\Controllers\UserNotificationController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DepartamentController;
+use App\Http\Controllers\DirectionController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -32,6 +36,7 @@ Route::prefix('users')->group(function () {
     Route::post('/{user}/notifications', [UserNotificationController::class, 'store']);
     Route::get('/{user}/notifications', [UserNotificationController::class, 'index']);
     Route::get('/{user}/inbox', [UserController::class, 'inbox']);
+    Route::post('/', [UserController::class, 'store']);
 });
 
 Route::prefix('notifications')->group(function () {
@@ -49,3 +54,9 @@ Route::prefix('emails')->group(function () {
 // Actions
 Route::post('/sign', [PDFController::class, 'sign']);
 //Route::post('/upload', [PDFController::class, 'upload']);
+
+// Catalogs
+Route::get('/positions', [PositionController::class, 'index']);
+Route::get('/departaments', [DepartamentController::class, 'index']);
+Route::get('/directions', [DirectionController::class, 'index']);
+Route::get('/roles', [RoleController::class, 'index']);

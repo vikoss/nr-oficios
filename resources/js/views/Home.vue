@@ -23,6 +23,13 @@
           :redirect-to="{ name: 'Inbox' }"
         />
       </div>
+      <div class="col-span-1" v-if="isAdmin">
+        <card-base
+          label="Alta de usuarios"
+          description="Formulario para dar de alta nuevo usuarios."
+          :redirect-to="{ name: 'Users' }"
+        />
+      </div>
     </div>
   </main>
 </template>
@@ -30,8 +37,15 @@
 <script>
 import HeaderBase from './../components/HeaderBase.vue'
 import CardBase from './../components/CardBase.vue'
+import { isRoleAdmin } from '../helpers/localStorage'
 
 export default {
-  components: { HeaderBase, CardBase }
+  components: { HeaderBase, CardBase },
+  setup() {
+
+    return {
+      isAdmin: isRoleAdmin()
+    }
+  },
 }
 </script>

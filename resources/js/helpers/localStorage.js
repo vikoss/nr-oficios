@@ -1,3 +1,5 @@
+import { ROLE_ADMINISTRATOR } from './constants';
+
 const currentUser = () => {
   const local = localStorage.getItem('oficios-me');
   if (!local) {
@@ -14,4 +16,8 @@ const JWT = () => {
   return JSON.parse(local).access_token;
 };
 
-export { currentUser, JWT };
+const isRoleAdmin = () => {
+  return currentUser().role?.name === ROLE_ADMINISTRATOR;
+};
+
+export { currentUser, JWT, isRoleAdmin };

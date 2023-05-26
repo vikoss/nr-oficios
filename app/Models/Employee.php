@@ -10,6 +10,19 @@ class Employee extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'first_surname',
+        'second_surname',
+        'employee_number',
+        'position_id'
+    ];
+
+    /**
      * Get the phone associated with the user.
      */
     public function user()

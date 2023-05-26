@@ -1,4 +1,4 @@
-import { get } from 'axios'
+import { get, post } from 'axios'
 import { API } from './baseUrl'
 import { JWT, currentUser } from '../helpers/localStorage'
 
@@ -26,4 +26,16 @@ const getInbox = (page = 1) => new Promise((resolve, reject) => {
     .catch(({ response }) => reject(response));
 })
 
-export { getAllEmails, getInbox }
+const storeUser = (user) => new Promise((resolve, reject) => {
+  post(`${API}/api/users`, user, {
+    headers: {
+      Authorization: `Bearer ${JWT()}`,
+    },
+  })
+    .then(({ data }) => {
+      resolve(data);
+    })
+    .catch(({ response }) => reject(response));
+});
+
+export { getAllEmails, getInbox, storeUser }
