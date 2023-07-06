@@ -42,8 +42,9 @@ class PDFController extends Controller
         $usersId = $request->get('signatory_users_id', false)
             ? explode(',', $request->get('signatory_users_id'))
             : [auth()->user()->id];
-        $employeesId = User::select('employee_id')->whereIn('id',  $usersId)->get();
-        $employees = Employee::whereIn('id', $employeesId)->get();
+        $employeesIds = User::select('employee_id')->whereIn('id',  $usersId)->get();
+        $arrayEmployeeIds = $employeesIds->pluck('employee_id')->toArray();
+        $employees = Employee::whereIn('id', $arrayEmployeeIds)->get();
         $pdfSign = PDF::loadView('pdf.sign', ['employees' => $employees->each(function ($employee) {
             $employee->qr_code = base64_encode(QrCode::generate(
                 "{$employee->name} {$employee->first_surname} {$employee->second_surname} - {$employee->position->name}"
