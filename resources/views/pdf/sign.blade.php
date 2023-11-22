@@ -36,8 +36,12 @@
         </tr>
         <tr>
             <td style="text-align: center;">
+            <!-- max width of characters(98) -->
                 <p style="font-size:12px;">
-                    {{ base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$employee['position']['name']} {$employee['employee_number']} {$dateNow}") }}
+                    {{ substr(
+                        base64_encode("{$employee['name']} {$employee['first_surname']} {$employee['second_surname']} {$employee['position']['name']} {$employee['employee_number']} {$dateNow}"),
+                        -98
+                    ) }}
                 </p>
             </td>
         </tr>
