@@ -56,7 +56,7 @@
 <body background="./../public/images/FondeDePantalla.jpeg">
     <header>
         <p style="text-align: right; font-size: 14px;">
-            Nicolás Romero, Estado de México, a
+            Tu Empresa, Estado de México, a
             {{ "{$day} de {$monthName} de {$year}." }}
         </p>
     </header>

@@ -16,7 +16,7 @@
 <body background="./../public/images/FondeDePantalla.jpeg" style="background-size:cover; background-repeat: no-repeat; heigth:100%; width: 100%; margin-left:15px; ">
     <div style="margin-bottom: 100px;">
         <p style="margin-top: 150px; text-align: right; margin-right: 25px; margin-bottom: 350px;">
-            Nicolás Romero, Estado de México, a
+            Tu Empresa, Estado de México, a
             {{ "{$day} de {$monthName} de {$year}." }}
         </p>
     </div>

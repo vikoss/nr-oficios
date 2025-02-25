@@ -6,7 +6,7 @@
         Bienvenido
         <br> a
         <strong class="font-bold">Circulares</strong>
-        <br> Nicolás Romero
+        <br> Tu Empresa
       </h1>
       <h2 class="text-white text-base mt-5 sm:text-xl lg:absolute sm:bottom-24">
         Nos renovamos para ofrecerte
